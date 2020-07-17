@@ -265,6 +265,18 @@ export(TARGETS ${PROJECT_NAME}
 
 export(PACKAGE ${PROJECT_NAME})
 
+foreach(LIB ${BEHAVIOR_TREE_LIBRARY})
+    set(PRIVATE_LIBS "${PRIVATE_LIBS} -l${LIB}")
+endforeach()
+
+STRING(TOLOWER ${PROJECT_NAME} PRJNAME_LOWER)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/pkgconfig.pc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PRJNAME_LOWER}.pc" @ONLY)
+
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PRJNAME_LOWER}.pc"
+        DESTINATION lib/pkgconfig)
+
+
 ######################################################
 # EXAMPLES and TOOLS
 if(BUILD_TOOLS)
